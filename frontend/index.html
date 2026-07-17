@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NL to SQL Compiler</title>
+    <link rel="stylesheet" href="style.css?v=4">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Natural Language to SQL Compiler</h1>
+            <p>Convert your English queries into executable SQL commands dynamically through a phased compilation pipeline.</p>
+        </header>
+
+        <section class="input-section">
+            <div class="input-box">
+                <input type="text" id="queryInput" placeholder="e.g. Show me all employees with salary greater than 50000" autocomplete="off" />
+                <button id="micBtn" title="Voice Input" class="icon-btn">🎤</button>
+            </div>
+            
+            <div class="controls">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="llmToggle" checked>
+                    <span class="slider"></span>
+                    <span class="label-text">Enable AI Proactive Interventions (Gemini 2.0 Flash)</span>
+                </label>
+                <select id="dialectSelect" style="padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); margin-right: 15px;">
+                    <option value="sqlite" style="color: black;">SQLite</option>
+                    <option value="postgres" style="color: black;">PostgreSQL</option>
+                    <option value="mysql" style="color: black;">MySQL</option>
+                    <option value="mongodb" style="color: black;">MongoDB</option>
+                </select>
+                <button id="runBtn" class="primary-btn">Compile & Run</button>
+            </div>
+            <div id="aiBanner" class="hidden">⚡ AI Assist was used to repair this query</div>
+            <div id="errorBanner" class="hidden error-banner"></div>
+        </section>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div> Compiling...
+        </div>
+
+        <section class="results-layout">
+            <div class="table-container">
+                <h2>Data Output</h2>
+                <table id="resultsTable">
+                    <thead><tr id="tableHeadRow"></tr></thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+                <div id="emptyState" class="empty-state">Run a query to see data results here.</div>
+            </div>
+
+            <div class="pipeline-container">
+                <h2>Compiler Phases Breakdown</h2>
+                <div class="accordion">
+                    <!-- Phase 1 -->
+                    <div class="accordion-item">
+                        <button class="accordion-header active">1. Lexical Analysis (Tokens)</button>
+                        <div class="accordion-content open">
+                            <div id="tokensView" class="tokens-container"></div>
+                        </div>
+                    </div>
+                    <!-- Phase 2 -->
+                    <div class="accordion-item">
+                        <button class="accordion-header">2. Syntax Analysis (AST)</button>
+                        <div class="accordion-content">
+                            <div id="astView" class="tree-view"></div>
+                        </div>
+                    </div>
+                    <!-- Phase 3 -->
+                    <div class="accordion-item">
+                        <button class="accordion-header">3. Semantic Analysis</button>
+                        <div class="accordion-content">
+                            <div id="semanticView" class="status-badge"></div>
+                        </div>
+                    </div>
+                    <!-- Phase 4 -->
+                    <div class="accordion-item">
+                        <button class="accordion-header">4. Intermediate Representation (IR)</button>
+                        <div class="accordion-content">
+                            <pre><code id="irView" class="language-json"></code></pre>
+                        </div>
+                    </div>
+                    <!-- Phase 5 -->
+                    <div class="accordion-item">
+                        <button class="accordion-header">5. Optimization</button>
+                        <div class="accordion-content">
+                            <ul id="optView" class="stats-list"></ul>
+                        </div>
+                    </div>
+                    <!-- Phase 6 -->
+                    <div class="accordion-item">
+                        <button class="accordion-header">6. Code Generation (SQL)</button>
+                        <div class="accordion-content">
+                            <div class="sql-block">
+                                <pre><code id="sqlView" class="language-sql"></code></pre>
+                                <button id="copyBtn" class="copy-btn">Copy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js?v=5"></script>
+</body>
+</html>

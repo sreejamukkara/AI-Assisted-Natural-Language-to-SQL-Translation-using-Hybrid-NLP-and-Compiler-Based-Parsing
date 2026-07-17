@@ -1,0 +1,1027 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> query
+Rule 1     query -> SELECT columns FROM IDENTIFIER where_clause group_clause having_clause join_clause order_clause limit_clause
+Rule 2     query -> SELECT IDENTIFIER where_clause group_clause having_clause join_clause order_clause limit_clause
+Rule 3     columns -> IDENTIFIER
+Rule 4     columns -> ASTERISK
+Rule 5     columns -> COUNT IDENTIFIER
+Rule 6     columns -> AVG IDENTIFIER
+Rule 7     columns -> COUNT ASTERISK
+Rule 8     columns -> columns COMMA columns
+Rule 9     where_clause -> WHERE conditions
+Rule 10    where_clause -> empty
+Rule 11    conditions -> condition
+Rule 12    conditions -> condition AND conditions
+Rule 13    conditions -> condition OR conditions
+Rule 14    group_clause -> GROUP BY columns
+Rule 15    group_clause -> empty
+Rule 16    having_clause -> HAVING conditions
+Rule 17    having_clause -> empty
+Rule 18    expr -> NUMBER
+Rule 19    expr -> expr PLUS expr
+Rule 20    expr -> expr MINUS expr
+Rule 21    expr -> expr ASTERISK expr
+Rule 22    expr -> expr DIVIDE expr
+Rule 23    condition -> IDENTIFIER OPERATOR expr
+Rule 24    condition -> IDENTIFIER OPERATOR STRING
+Rule 25    join_clause -> JOIN IDENTIFIER ON IDENTIFIER OPERATOR IDENTIFIER
+Rule 26    join_clause -> empty
+Rule 27    order_clause -> ORDER BY IDENTIFIER direction
+Rule 28    order_clause -> empty
+Rule 29    direction -> ASC
+Rule 30    direction -> DESC
+Rule 31    direction -> empty
+Rule 32    limit_clause -> LIMIT NUMBER
+Rule 33    limit_clause -> empty
+Rule 34    empty -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 12
+ASC                  : 29
+ASTERISK             : 4 7 21
+AVG                  : 6
+BY                   : 14 27
+COMMA                : 8
+COUNT                : 5 7
+DESC                 : 30
+DIVIDE               : 22
+FROM                 : 1
+GROUP                : 14
+HAVING               : 16
+IDENTIFIER           : 1 2 3 5 6 23 24 25 25 25 27
+JOIN                 : 25
+LIMIT                : 32
+MINUS                : 20
+NUMBER               : 18 32
+ON                   : 25
+OPERATOR             : 23 24 25
+OR                   : 13
+ORDER                : 27
+PLUS                 : 19
+SELECT               : 1 2
+STRING               : 24
+WHERE                : 9
+error                : 
+
+Nonterminals, with rules where they appear
+
+columns              : 1 8 8 14
+condition            : 11 12 13
+conditions           : 9 12 13 16
+direction            : 27
+empty                : 10 15 17 26 28 31 33
+expr                 : 19 19 20 20 21 21 22 22 23
+group_clause         : 1 2
+having_clause        : 1 2
+join_clause          : 1 2
+limit_clause         : 1 2
+order_clause         : 1 2
+query                : 0
+where_clause         : 1 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . query
+    (1) query -> . SELECT columns FROM IDENTIFIER where_clause group_clause having_clause join_clause order_clause limit_clause
+    (2) query -> . SELECT IDENTIFIER where_clause group_clause having_clause join_clause order_clause limit_clause
+
+    SELECT          shift and go to state 2
+
+    query                          shift and go to state 1
+
+state 1
+
+    (0) S' -> query .
+
+
+
+state 2
+
+    (1) query -> SELECT . columns FROM IDENTIFIER where_clause group_clause having_clause join_clause order_clause limit_clause
+    (2) query -> SELECT . IDENTIFIER where_clause group_clause having_clause join_clause order_clause limit_clause
+    (3) columns -> . IDENTIFIER
+    (4) columns -> . ASTERISK
+    (5) columns -> . COUNT IDENTIFIER
+    (6) columns -> . AVG IDENTIFIER
+    (7) columns -> . COUNT ASTERISK
+    (8) columns -> . columns COMMA columns
+
+    IDENTIFIER      shift and go to state 4
+    ASTERISK        shift and go to state 5
+    COUNT           shift and go to state 6
+    AVG             shift and go to state 7
+
+    columns                        shift and go to state 3
+
+state 3
+
+    (1) query -> SELECT columns . FROM IDENTIFIER where_clause group_clause having_clause join_clause order_clause limit_clause
+    (8) columns -> columns . COMMA columns
+
+    FROM            shift and go to state 8
+    COMMA           shift and go to state 9
+
+
+state 4
+
+    (2) query -> SELECT IDENTIFIER . where_clause group_clause having_clause join_clause order_clause limit_clause
+    (3) columns -> IDENTIFIER .
+    (9) where_clause -> . WHERE conditions
+    (10) where_clause -> . empty
+    (34) empty -> .
+
+    FROM            reduce using rule 3 (columns -> IDENTIFIER .)
+    COMMA           reduce using rule 3 (columns -> IDENTIFIER .)
+    WHERE           shift and go to state 11
+    GROUP           reduce using rule 34 (empty -> .)
+    HAVING          reduce using rule 34 (empty -> .)
+    JOIN            reduce using rule 34 (empty -> .)
+    ORDER           reduce using rule 34 (empty -> .)
+    LIMIT           reduce using rule 34 (empty -> .)
+    $end            reduce using rule 34 (empty -> .)
+
+    where_clause                   shift and go to state 10
+    empty                          shift and go to state 12
+
+state 5
+
+    (4) columns -> ASTERISK .
+
+    FROM            reduce using rule 4 (columns -> ASTERISK .)
+    COMMA           reduce using rule 4 (columns -> ASTERISK .)
+    HAVING          reduce using rule 4 (columns -> ASTERISK .)
+    JOIN            reduce using rule 4 (columns -> ASTERISK .)
+    ORDER           reduce using rule 4 (columns -> ASTERISK .)
+    LIMIT           reduce using rule 4 (columns -> ASTERISK .)
+    $end            reduce using rule 4 (columns -> ASTERISK .)
+
+
+state 6
+
+    (5) columns -> COUNT . IDENTIFIER
+    (7) columns -> COUNT . ASTERISK
+
+    IDENTIFIER      shift and go to state 13
+    ASTERISK        shift and go to state 14
+
+
+state 7
+
+    (6) columns -> AVG . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 15
+
+
+state 8
+
+    (1) query -> SELECT columns FROM . IDENTIFIER where_clause group_clause having_clause join_clause order_clause limit_clause
+
+    IDENTIFIER      shift and go to state 16
+
+
+state 9
+
+    (8) columns -> columns COMMA . columns
+    (3) columns -> . IDENTIFIER
+    (4) columns -> . ASTERISK
+    (5) columns -> . COUNT IDENTIFIER
+    (6) columns -> . AVG IDENTIFIER
+    (7) columns -> . COUNT ASTERISK
+    (8) columns -> . columns COMMA columns
+
+    IDENTIFIER      shift and go to state 18
+    ASTERISK        shift and go to state 5
+    COUNT           shift and go to state 6
+    AVG             shift and go to state 7
+
+    columns                        shift and go to state 17
+
+state 10
+
+    (2) query -> SELECT IDENTIFIER where_clause . group_clause having_clause join_clause order_clause limit_clause
+    (14) group_clause -> . GROUP BY columns
+    (15) group_clause -> . empty
+    (34) empty -> .
+
+    GROUP           shift and go to state 20
+    HAVING          reduce using rule 34 (empty -> .)
+    JOIN            reduce using rule 34 (empty -> .)
+    ORDER           reduce using rule 34 (empty -> .)
+    LIMIT           reduce using rule 34 (empty -> .)
+    $end            reduce using rule 34 (empty -> .)
+
+    group_clause                   shift and go to state 19
+    empty                          shift and go to state 21
+
+state 11
+
+    (9) where_clause -> WHERE . conditions
+    (11) conditions -> . condition
+    (12) conditions -> . condition AND conditions
+    (13) conditions -> . condition OR conditions
+    (23) condition -> . IDENTIFIER OPERATOR expr
+    (24) condition -> . IDENTIFIER OPERATOR STRING
+
+    IDENTIFIER      shift and go to state 24
+
+    conditions                     shift and go to state 22
+    condition                      shift and go to state 23
+
+state 12
+
+    (10) where_clause -> empty .
+
+    GROUP           reduce using rule 10 (where_clause -> empty .)
+    HAVING          reduce using rule 10 (where_clause -> empty .)
+    JOIN            reduce using rule 10 (where_clause -> empty .)
+    ORDER           reduce using rule 10 (where_clause -> empty .)
+    LIMIT           reduce using rule 10 (where_clause -> empty .)
+    $end            reduce using rule 10 (where_clause -> empty .)
+
+
+state 13
+
+    (5) columns -> COUNT IDENTIFIER .
+
+    FROM            reduce using rule 5 (columns -> COUNT IDENTIFIER .)
+    COMMA           reduce using rule 5 (columns -> COUNT IDENTIFIER .)
+    HAVING          reduce using rule 5 (columns -> COUNT IDENTIFIER .)
+    JOIN            reduce using rule 5 (columns -> COUNT IDENTIFIER .)
+    ORDER           reduce using rule 5 (columns -> COUNT IDENTIFIER .)
+    LIMIT           reduce using rule 5 (columns -> COUNT IDENTIFIER .)
+    $end            reduce using rule 5 (columns -> COUNT IDENTIFIER .)
+
+
+state 14
+
+    (7) columns -> COUNT ASTERISK .
+
+    FROM            reduce using rule 7 (columns -> COUNT ASTERISK .)
+    COMMA           reduce using rule 7 (columns -> COUNT ASTERISK .)
+    HAVING          reduce using rule 7 (columns -> COUNT ASTERISK .)
+    JOIN            reduce using rule 7 (columns -> COUNT ASTERISK .)
+    ORDER           reduce using rule 7 (columns -> COUNT ASTERISK .)
+    LIMIT           reduce using rule 7 (columns -> COUNT ASTERISK .)
+    $end            reduce using rule 7 (columns -> COUNT ASTERISK .)
+
+
+state 15
+
+    (6) columns -> AVG IDENTIFIER .
+
+    FROM            reduce using rule 6 (columns -> AVG IDENTIFIER .)
+    COMMA           reduce using rule 6 (columns -> AVG IDENTIFIER .)
+    HAVING          reduce using rule 6 (columns -> AVG IDENTIFIER .)
+    JOIN            reduce using rule 6 (columns -> AVG IDENTIFIER .)
+    ORDER           reduce using rule 6 (columns -> AVG IDENTIFIER .)
+    LIMIT           reduce using rule 6 (columns -> AVG IDENTIFIER .)
+    $end            reduce using rule 6 (columns -> AVG IDENTIFIER .)
+
+
+state 16
+
+    (1) query -> SELECT columns FROM IDENTIFIER . where_clause group_clause having_clause join_clause order_clause limit_clause
+    (9) where_clause -> . WHERE conditions
+    (10) where_clause -> . empty
+    (34) empty -> .
+
+    WHERE           shift and go to state 11
+    GROUP           reduce using rule 34 (empty -> .)
+    HAVING          reduce using rule 34 (empty -> .)
+    JOIN            reduce using rule 34 (empty -> .)
+    ORDER           reduce using rule 34 (empty -> .)
+    LIMIT           reduce using rule 34 (empty -> .)
+    $end            reduce using rule 34 (empty -> .)
+
+    where_clause                   shift and go to state 25
+    empty                          shift and go to state 12
+
+state 17
+
+    (8) columns -> columns COMMA columns .
+    (8) columns -> columns . COMMA columns
+
+  ! shift/reduce conflict for COMMA resolved as shift
+    FROM            reduce using rule 8 (columns -> columns COMMA columns .)
+    HAVING          reduce using rule 8 (columns -> columns COMMA columns .)
+    JOIN            reduce using rule 8 (columns -> columns COMMA columns .)
+    ORDER           reduce using rule 8 (columns -> columns COMMA columns .)
+    LIMIT           reduce using rule 8 (columns -> columns COMMA columns .)
+    $end            reduce using rule 8 (columns -> columns COMMA columns .)
+    COMMA           shift and go to state 9
+
+  ! COMMA           [ reduce using rule 8 (columns -> columns COMMA columns .) ]
+
+
+state 18
+
+    (3) columns -> IDENTIFIER .
+
+    COMMA           reduce using rule 3 (columns -> IDENTIFIER .)
+    FROM            reduce using rule 3 (columns -> IDENTIFIER .)
+    HAVING          reduce using rule 3 (columns -> IDENTIFIER .)
+    JOIN            reduce using rule 3 (columns -> IDENTIFIER .)
+    ORDER           reduce using rule 3 (columns -> IDENTIFIER .)
+    LIMIT           reduce using rule 3 (columns -> IDENTIFIER .)
+    $end            reduce using rule 3 (columns -> IDENTIFIER .)
+
+
+state 19
+
+    (2) query -> SELECT IDENTIFIER where_clause group_clause . having_clause join_clause order_clause limit_clause
+    (16) having_clause -> . HAVING conditions
+    (17) having_clause -> . empty
+    (34) empty -> .
+
+    HAVING          shift and go to state 27
+    JOIN            reduce using rule 34 (empty -> .)
+    ORDER           reduce using rule 34 (empty -> .)
+    LIMIT           reduce using rule 34 (empty -> .)
+    $end            reduce using rule 34 (empty -> .)
+
+    having_clause                  shift and go to state 26
+    empty                          shift and go to state 28
+
+state 20
+
+    (14) group_clause -> GROUP . BY columns
+
+    BY              shift and go to state 29
+
+
+state 21
+
+    (15) group_clause -> empty .
+
+    HAVING          reduce using rule 15 (group_clause -> empty .)
+    JOIN            reduce using rule 15 (group_clause -> empty .)
+    ORDER           reduce using rule 15 (group_clause -> empty .)
+    LIMIT           reduce using rule 15 (group_clause -> empty .)
+    $end            reduce using rule 15 (group_clause -> empty .)
+
+
+state 22
+
+    (9) where_clause -> WHERE conditions .
+
+    GROUP           reduce using rule 9 (where_clause -> WHERE conditions .)
+    HAVING          reduce using rule 9 (where_clause -> WHERE conditions .)
+    JOIN            reduce using rule 9 (where_clause -> WHERE conditions .)
+    ORDER           reduce using rule 9 (where_clause -> WHERE conditions .)
+    LIMIT           reduce using rule 9 (where_clause -> WHERE conditions .)
+    $end            reduce using rule 9 (where_clause -> WHERE conditions .)
+
+
+state 23
+
+    (11) conditions -> condition .
+    (12) conditions -> condition . AND conditions
+    (13) conditions -> condition . OR conditions
+
+    GROUP           reduce using rule 11 (conditions -> condition .)
+    HAVING          reduce using rule 11 (conditions -> condition .)
+    JOIN            reduce using rule 11 (conditions -> condition .)
+    ORDER           reduce using rule 11 (conditions -> condition .)
+    LIMIT           reduce using rule 11 (conditions -> condition .)
+    $end            reduce using rule 11 (conditions -> condition .)
+    AND             shift and go to state 30
+    OR              shift and go to state 31
+
+
+state 24
+
+    (23) condition -> IDENTIFIER . OPERATOR expr
+    (24) condition -> IDENTIFIER . OPERATOR STRING
+
+    OPERATOR        shift and go to state 32
+
+
+state 25
+
+    (1) query -> SELECT columns FROM IDENTIFIER where_clause . group_clause having_clause join_clause order_clause limit_clause
+    (14) group_clause -> . GROUP BY columns
+    (15) group_clause -> . empty
+    (34) empty -> .
+
+    GROUP           shift and go to state 20
+    HAVING          reduce using rule 34 (empty -> .)
+    JOIN            reduce using rule 34 (empty -> .)
+    ORDER           reduce using rule 34 (empty -> .)
+    LIMIT           reduce using rule 34 (empty -> .)
+    $end            reduce using rule 34 (empty -> .)
+
+    group_clause                   shift and go to state 33
+    empty                          shift and go to state 21
+
+state 26
+
+    (2) query -> SELECT IDENTIFIER where_clause group_clause having_clause . join_clause order_clause limit_clause
+    (25) join_clause -> . JOIN IDENTIFIER ON IDENTIFIER OPERATOR IDENTIFIER
+    (26) join_clause -> . empty
+    (34) empty -> .
+
+    JOIN            shift and go to state 35
+    ORDER           reduce using rule 34 (empty -> .)
+    LIMIT           reduce using rule 34 (empty -> .)
+    $end            reduce using rule 34 (empty -> .)
+
+    join_clause                    shift and go to state 34
+    empty                          shift and go to state 36
+
+state 27
+
+    (16) having_clause -> HAVING . conditions
+    (11) conditions -> . condition
+    (12) conditions -> . condition AND conditions
+    (13) conditions -> . condition OR conditions
+    (23) condition -> . IDENTIFIER OPERATOR expr
+    (24) condition -> . IDENTIFIER OPERATOR STRING
+
+    IDENTIFIER      shift and go to state 24
+
+    conditions                     shift and go to state 37
+    condition                      shift and go to state 23
+
+state 28
+
+    (17) having_clause -> empty .
+
+    JOIN            reduce using rule 17 (having_clause -> empty .)
+    ORDER           reduce using rule 17 (having_clause -> empty .)
+    LIMIT           reduce using rule 17 (having_clause -> empty .)
+    $end            reduce using rule 17 (having_clause -> empty .)
+
+
+state 29
+
+    (14) group_clause -> GROUP BY . columns
+    (3) columns -> . IDENTIFIER
+    (4) columns -> . ASTERISK
+    (5) columns -> . COUNT IDENTIFIER
+    (6) columns -> . AVG IDENTIFIER
+    (7) columns -> . COUNT ASTERISK
+    (8) columns -> . columns COMMA columns
+
+    IDENTIFIER      shift and go to state 18
+    ASTERISK        shift and go to state 5
+    COUNT           shift and go to state 6
+    AVG             shift and go to state 7
+
+    columns                        shift and go to state 38
+
+state 30
+
+    (12) conditions -> condition AND . conditions
+    (11) conditions -> . condition
+    (12) conditions -> . condition AND conditions
+    (13) conditions -> . condition OR conditions
+    (23) condition -> . IDENTIFIER OPERATOR expr
+    (24) condition -> . IDENTIFIER OPERATOR STRING
+
+    IDENTIFIER      shift and go to state 24
+
+    condition                      shift and go to state 23
+    conditions                     shift and go to state 39
+
+state 31
+
+    (13) conditions -> condition OR . conditions
+    (11) conditions -> . condition
+    (12) conditions -> . condition AND conditions
+    (13) conditions -> . condition OR conditions
+    (23) condition -> . IDENTIFIER OPERATOR expr
+    (24) condition -> . IDENTIFIER OPERATOR STRING
+
+    IDENTIFIER      shift and go to state 24
+
+    condition                      shift and go to state 23
+    conditions                     shift and go to state 40
+
+state 32
+
+    (23) condition -> IDENTIFIER OPERATOR . expr
+    (24) condition -> IDENTIFIER OPERATOR . STRING
+    (18) expr -> . NUMBER
+    (19) expr -> . expr PLUS expr
+    (20) expr -> . expr MINUS expr
+    (21) expr -> . expr ASTERISK expr
+    (22) expr -> . expr DIVIDE expr
+
+    STRING          shift and go to state 42
+    NUMBER          shift and go to state 43
+
+    expr                           shift and go to state 41
+
+state 33
+
+    (1) query -> SELECT columns FROM IDENTIFIER where_clause group_clause . having_clause join_clause order_clause limit_clause
+    (16) having_clause -> . HAVING conditions
+    (17) having_clause -> . empty
+    (34) empty -> .
+
+    HAVING          shift and go to state 27
+    JOIN            reduce using rule 34 (empty -> .)
+    ORDER           reduce using rule 34 (empty -> .)
+    LIMIT           reduce using rule 34 (empty -> .)
+    $end            reduce using rule 34 (empty -> .)
+
+    having_clause                  shift and go to state 44
+    empty                          shift and go to state 28
+
+state 34
+
+    (2) query -> SELECT IDENTIFIER where_clause group_clause having_clause join_clause . order_clause limit_clause
+    (27) order_clause -> . ORDER BY IDENTIFIER direction
+    (28) order_clause -> . empty
+    (34) empty -> .
+
+    ORDER           shift and go to state 46
+    LIMIT           reduce using rule 34 (empty -> .)
+    $end            reduce using rule 34 (empty -> .)
+
+    order_clause                   shift and go to state 45
+    empty                          shift and go to state 47
+
+state 35
+
+    (25) join_clause -> JOIN . IDENTIFIER ON IDENTIFIER OPERATOR IDENTIFIER
+
+    IDENTIFIER      shift and go to state 48
+
+
+state 36
+
+    (26) join_clause -> empty .
+
+    ORDER           reduce using rule 26 (join_clause -> empty .)
+    LIMIT           reduce using rule 26 (join_clause -> empty .)
+    $end            reduce using rule 26 (join_clause -> empty .)
+
+
+state 37
+
+    (16) having_clause -> HAVING conditions .
+
+    JOIN            reduce using rule 16 (having_clause -> HAVING conditions .)
+    ORDER           reduce using rule 16 (having_clause -> HAVING conditions .)
+    LIMIT           reduce using rule 16 (having_clause -> HAVING conditions .)
+    $end            reduce using rule 16 (having_clause -> HAVING conditions .)
+
+
+state 38
+
+    (14) group_clause -> GROUP BY columns .
+    (8) columns -> columns . COMMA columns
+
+    HAVING          reduce using rule 14 (group_clause -> GROUP BY columns .)
+    JOIN            reduce using rule 14 (group_clause -> GROUP BY columns .)
+    ORDER           reduce using rule 14 (group_clause -> GROUP BY columns .)
+    LIMIT           reduce using rule 14 (group_clause -> GROUP BY columns .)
+    $end            reduce using rule 14 (group_clause -> GROUP BY columns .)
+    COMMA           shift and go to state 9
+
+
+state 39
+
+    (12) conditions -> condition AND conditions .
+
+    GROUP           reduce using rule 12 (conditions -> condition AND conditions .)
+    HAVING          reduce using rule 12 (conditions -> condition AND conditions .)
+    JOIN            reduce using rule 12 (conditions -> condition AND conditions .)
+    ORDER           reduce using rule 12 (conditions -> condition AND conditions .)
+    LIMIT           reduce using rule 12 (conditions -> condition AND conditions .)
+    $end            reduce using rule 12 (conditions -> condition AND conditions .)
+
+
+state 40
+
+    (13) conditions -> condition OR conditions .
+
+    GROUP           reduce using rule 13 (conditions -> condition OR conditions .)
+    HAVING          reduce using rule 13 (conditions -> condition OR conditions .)
+    JOIN            reduce using rule 13 (conditions -> condition OR conditions .)
+    ORDER           reduce using rule 13 (conditions -> condition OR conditions .)
+    LIMIT           reduce using rule 13 (conditions -> condition OR conditions .)
+    $end            reduce using rule 13 (conditions -> condition OR conditions .)
+
+
+state 41
+
+    (23) condition -> IDENTIFIER OPERATOR expr .
+    (19) expr -> expr . PLUS expr
+    (20) expr -> expr . MINUS expr
+    (21) expr -> expr . ASTERISK expr
+    (22) expr -> expr . DIVIDE expr
+
+    AND             reduce using rule 23 (condition -> IDENTIFIER OPERATOR expr .)
+    OR              reduce using rule 23 (condition -> IDENTIFIER OPERATOR expr .)
+    GROUP           reduce using rule 23 (condition -> IDENTIFIER OPERATOR expr .)
+    HAVING          reduce using rule 23 (condition -> IDENTIFIER OPERATOR expr .)
+    JOIN            reduce using rule 23 (condition -> IDENTIFIER OPERATOR expr .)
+    ORDER           reduce using rule 23 (condition -> IDENTIFIER OPERATOR expr .)
+    LIMIT           reduce using rule 23 (condition -> IDENTIFIER OPERATOR expr .)
+    $end            reduce using rule 23 (condition -> IDENTIFIER OPERATOR expr .)
+    PLUS            shift and go to state 49
+    MINUS           shift and go to state 50
+    ASTERISK        shift and go to state 51
+    DIVIDE          shift and go to state 52
+
+
+state 42
+
+    (24) condition -> IDENTIFIER OPERATOR STRING .
+
+    AND             reduce using rule 24 (condition -> IDENTIFIER OPERATOR STRING .)
+    OR              reduce using rule 24 (condition -> IDENTIFIER OPERATOR STRING .)
+    GROUP           reduce using rule 24 (condition -> IDENTIFIER OPERATOR STRING .)
+    HAVING          reduce using rule 24 (condition -> IDENTIFIER OPERATOR STRING .)
+    JOIN            reduce using rule 24 (condition -> IDENTIFIER OPERATOR STRING .)
+    ORDER           reduce using rule 24 (condition -> IDENTIFIER OPERATOR STRING .)
+    LIMIT           reduce using rule 24 (condition -> IDENTIFIER OPERATOR STRING .)
+    $end            reduce using rule 24 (condition -> IDENTIFIER OPERATOR STRING .)
+
+
+state 43
+
+    (18) expr -> NUMBER .
+
+    PLUS            reduce using rule 18 (expr -> NUMBER .)
+    MINUS           reduce using rule 18 (expr -> NUMBER .)
+    ASTERISK        reduce using rule 18 (expr -> NUMBER .)
+    DIVIDE          reduce using rule 18 (expr -> NUMBER .)
+    AND             reduce using rule 18 (expr -> NUMBER .)
+    OR              reduce using rule 18 (expr -> NUMBER .)
+    GROUP           reduce using rule 18 (expr -> NUMBER .)
+    HAVING          reduce using rule 18 (expr -> NUMBER .)
+    JOIN            reduce using rule 18 (expr -> NUMBER .)
+    ORDER           reduce using rule 18 (expr -> NUMBER .)
+    LIMIT           reduce using rule 18 (expr -> NUMBER .)
+    $end            reduce using rule 18 (expr -> NUMBER .)
+
+
+state 44
+
+    (1) query -> SELECT columns FROM IDENTIFIER where_clause group_clause having_clause . join_clause order_clause limit_clause
+    (25) join_clause -> . JOIN IDENTIFIER ON IDENTIFIER OPERATOR IDENTIFIER
+    (26) join_clause -> . empty
+    (34) empty -> .
+
+    JOIN            shift and go to state 35
+    ORDER           reduce using rule 34 (empty -> .)
+    LIMIT           reduce using rule 34 (empty -> .)
+    $end            reduce using rule 34 (empty -> .)
+
+    join_clause                    shift and go to state 53
+    empty                          shift and go to state 36
+
+state 45
+
+    (2) query -> SELECT IDENTIFIER where_clause group_clause having_clause join_clause order_clause . limit_clause
+    (32) limit_clause -> . LIMIT NUMBER
+    (33) limit_clause -> . empty
+    (34) empty -> .
+
+    LIMIT           shift and go to state 55
+    $end            reduce using rule 34 (empty -> .)
+
+    limit_clause                   shift and go to state 54
+    empty                          shift and go to state 56
+
+state 46
+
+    (27) order_clause -> ORDER . BY IDENTIFIER direction
+
+    BY              shift and go to state 57
+
+
+state 47
+
+    (28) order_clause -> empty .
+
+    LIMIT           reduce using rule 28 (order_clause -> empty .)
+    $end            reduce using rule 28 (order_clause -> empty .)
+
+
+state 48
+
+    (25) join_clause -> JOIN IDENTIFIER . ON IDENTIFIER OPERATOR IDENTIFIER
+
+    ON              shift and go to state 58
+
+
+state 49
+
+    (19) expr -> expr PLUS . expr
+    (18) expr -> . NUMBER
+    (19) expr -> . expr PLUS expr
+    (20) expr -> . expr MINUS expr
+    (21) expr -> . expr ASTERISK expr
+    (22) expr -> . expr DIVIDE expr
+
+    NUMBER          shift and go to state 43
+
+    expr                           shift and go to state 59
+
+state 50
+
+    (20) expr -> expr MINUS . expr
+    (18) expr -> . NUMBER
+    (19) expr -> . expr PLUS expr
+    (20) expr -> . expr MINUS expr
+    (21) expr -> . expr ASTERISK expr
+    (22) expr -> . expr DIVIDE expr
+
+    NUMBER          shift and go to state 43
+
+    expr                           shift and go to state 60
+
+state 51
+
+    (21) expr -> expr ASTERISK . expr
+    (18) expr -> . NUMBER
+    (19) expr -> . expr PLUS expr
+    (20) expr -> . expr MINUS expr
+    (21) expr -> . expr ASTERISK expr
+    (22) expr -> . expr DIVIDE expr
+
+    NUMBER          shift and go to state 43
+
+    expr                           shift and go to state 61
+
+state 52
+
+    (22) expr -> expr DIVIDE . expr
+    (18) expr -> . NUMBER
+    (19) expr -> . expr PLUS expr
+    (20) expr -> . expr MINUS expr
+    (21) expr -> . expr ASTERISK expr
+    (22) expr -> . expr DIVIDE expr
+
+    NUMBER          shift and go to state 43
+
+    expr                           shift and go to state 62
+
+state 53
+
+    (1) query -> SELECT columns FROM IDENTIFIER where_clause group_clause having_clause join_clause . order_clause limit_clause
+    (27) order_clause -> . ORDER BY IDENTIFIER direction
+    (28) order_clause -> . empty
+    (34) empty -> .
+
+    ORDER           shift and go to state 46
+    LIMIT           reduce using rule 34 (empty -> .)
+    $end            reduce using rule 34 (empty -> .)
+
+    order_clause                   shift and go to state 63
+    empty                          shift and go to state 47
+
+state 54
+
+    (2) query -> SELECT IDENTIFIER where_clause group_clause having_clause join_clause order_clause limit_clause .
+
+    $end            reduce using rule 2 (query -> SELECT IDENTIFIER where_clause group_clause having_clause join_clause order_clause limit_clause .)
+
+
+state 55
+
+    (32) limit_clause -> LIMIT . NUMBER
+
+    NUMBER          shift and go to state 64
+
+
+state 56
+
+    (33) limit_clause -> empty .
+
+    $end            reduce using rule 33 (limit_clause -> empty .)
+
+
+state 57
+
+    (27) order_clause -> ORDER BY . IDENTIFIER direction
+
+    IDENTIFIER      shift and go to state 65
+
+
+state 58
+
+    (25) join_clause -> JOIN IDENTIFIER ON . IDENTIFIER OPERATOR IDENTIFIER
+
+    IDENTIFIER      shift and go to state 66
+
+
+state 59
+
+    (19) expr -> expr PLUS expr .
+    (19) expr -> expr . PLUS expr
+    (20) expr -> expr . MINUS expr
+    (21) expr -> expr . ASTERISK expr
+    (22) expr -> expr . DIVIDE expr
+
+    PLUS            reduce using rule 19 (expr -> expr PLUS expr .)
+    MINUS           reduce using rule 19 (expr -> expr PLUS expr .)
+    AND             reduce using rule 19 (expr -> expr PLUS expr .)
+    OR              reduce using rule 19 (expr -> expr PLUS expr .)
+    GROUP           reduce using rule 19 (expr -> expr PLUS expr .)
+    HAVING          reduce using rule 19 (expr -> expr PLUS expr .)
+    JOIN            reduce using rule 19 (expr -> expr PLUS expr .)
+    ORDER           reduce using rule 19 (expr -> expr PLUS expr .)
+    LIMIT           reduce using rule 19 (expr -> expr PLUS expr .)
+    $end            reduce using rule 19 (expr -> expr PLUS expr .)
+    ASTERISK        shift and go to state 51
+    DIVIDE          shift and go to state 52
+
+  ! ASTERISK        [ reduce using rule 19 (expr -> expr PLUS expr .) ]
+  ! DIVIDE          [ reduce using rule 19 (expr -> expr PLUS expr .) ]
+  ! PLUS            [ shift and go to state 49 ]
+  ! MINUS           [ shift and go to state 50 ]
+
+
+state 60
+
+    (20) expr -> expr MINUS expr .
+    (19) expr -> expr . PLUS expr
+    (20) expr -> expr . MINUS expr
+    (21) expr -> expr . ASTERISK expr
+    (22) expr -> expr . DIVIDE expr
+
+    PLUS            reduce using rule 20 (expr -> expr MINUS expr .)
+    MINUS           reduce using rule 20 (expr -> expr MINUS expr .)
+    AND             reduce using rule 20 (expr -> expr MINUS expr .)
+    OR              reduce using rule 20 (expr -> expr MINUS expr .)
+    GROUP           reduce using rule 20 (expr -> expr MINUS expr .)
+    HAVING          reduce using rule 20 (expr -> expr MINUS expr .)
+    JOIN            reduce using rule 20 (expr -> expr MINUS expr .)
+    ORDER           reduce using rule 20 (expr -> expr MINUS expr .)
+    LIMIT           reduce using rule 20 (expr -> expr MINUS expr .)
+    $end            reduce using rule 20 (expr -> expr MINUS expr .)
+    ASTERISK        shift and go to state 51
+    DIVIDE          shift and go to state 52
+
+  ! ASTERISK        [ reduce using rule 20 (expr -> expr MINUS expr .) ]
+  ! DIVIDE          [ reduce using rule 20 (expr -> expr MINUS expr .) ]
+  ! PLUS            [ shift and go to state 49 ]
+  ! MINUS           [ shift and go to state 50 ]
+
+
+state 61
+
+    (21) expr -> expr ASTERISK expr .
+    (19) expr -> expr . PLUS expr
+    (20) expr -> expr . MINUS expr
+    (21) expr -> expr . ASTERISK expr
+    (22) expr -> expr . DIVIDE expr
+
+    PLUS            reduce using rule 21 (expr -> expr ASTERISK expr .)
+    MINUS           reduce using rule 21 (expr -> expr ASTERISK expr .)
+    ASTERISK        reduce using rule 21 (expr -> expr ASTERISK expr .)
+    DIVIDE          reduce using rule 21 (expr -> expr ASTERISK expr .)
+    AND             reduce using rule 21 (expr -> expr ASTERISK expr .)
+    OR              reduce using rule 21 (expr -> expr ASTERISK expr .)
+    GROUP           reduce using rule 21 (expr -> expr ASTERISK expr .)
+    HAVING          reduce using rule 21 (expr -> expr ASTERISK expr .)
+    JOIN            reduce using rule 21 (expr -> expr ASTERISK expr .)
+    ORDER           reduce using rule 21 (expr -> expr ASTERISK expr .)
+    LIMIT           reduce using rule 21 (expr -> expr ASTERISK expr .)
+    $end            reduce using rule 21 (expr -> expr ASTERISK expr .)
+
+  ! PLUS            [ shift and go to state 49 ]
+  ! MINUS           [ shift and go to state 50 ]
+  ! ASTERISK        [ shift and go to state 51 ]
+  ! DIVIDE          [ shift and go to state 52 ]
+
+
+state 62
+
+    (22) expr -> expr DIVIDE expr .
+    (19) expr -> expr . PLUS expr
+    (20) expr -> expr . MINUS expr
+    (21) expr -> expr . ASTERISK expr
+    (22) expr -> expr . DIVIDE expr
+
+    PLUS            reduce using rule 22 (expr -> expr DIVIDE expr .)
+    MINUS           reduce using rule 22 (expr -> expr DIVIDE expr .)
+    ASTERISK        reduce using rule 22 (expr -> expr DIVIDE expr .)
+    DIVIDE          reduce using rule 22 (expr -> expr DIVIDE expr .)
+    AND             reduce using rule 22 (expr -> expr DIVIDE expr .)
+    OR              reduce using rule 22 (expr -> expr DIVIDE expr .)
+    GROUP           reduce using rule 22 (expr -> expr DIVIDE expr .)
+    HAVING          reduce using rule 22 (expr -> expr DIVIDE expr .)
+    JOIN            reduce using rule 22 (expr -> expr DIVIDE expr .)
+    ORDER           reduce using rule 22 (expr -> expr DIVIDE expr .)
+    LIMIT           reduce using rule 22 (expr -> expr DIVIDE expr .)
+    $end            reduce using rule 22 (expr -> expr DIVIDE expr .)
+
+  ! PLUS            [ shift and go to state 49 ]
+  ! MINUS           [ shift and go to state 50 ]
+  ! ASTERISK        [ shift and go to state 51 ]
+  ! DIVIDE          [ shift and go to state 52 ]
+
+
+state 63
+
+    (1) query -> SELECT columns FROM IDENTIFIER where_clause group_clause having_clause join_clause order_clause . limit_clause
+    (32) limit_clause -> . LIMIT NUMBER
+    (33) limit_clause -> . empty
+    (34) empty -> .
+
+    LIMIT           shift and go to state 55
+    $end            reduce using rule 34 (empty -> .)
+
+    limit_clause                   shift and go to state 67
+    empty                          shift and go to state 56
+
+state 64
+
+    (32) limit_clause -> LIMIT NUMBER .
+
+    $end            reduce using rule 32 (limit_clause -> LIMIT NUMBER .)
+
+
+state 65
+
+    (27) order_clause -> ORDER BY IDENTIFIER . direction
+    (29) direction -> . ASC
+    (30) direction -> . DESC
+    (31) direction -> . empty
+    (34) empty -> .
+
+    ASC             shift and go to state 69
+    DESC            shift and go to state 70
+    LIMIT           reduce using rule 34 (empty -> .)
+    $end            reduce using rule 34 (empty -> .)
+
+    direction                      shift and go to state 68
+    empty                          shift and go to state 71
+
+state 66
+
+    (25) join_clause -> JOIN IDENTIFIER ON IDENTIFIER . OPERATOR IDENTIFIER
+
+    OPERATOR        shift and go to state 72
+
+
+state 67
+
+    (1) query -> SELECT columns FROM IDENTIFIER where_clause group_clause having_clause join_clause order_clause limit_clause .
+
+    $end            reduce using rule 1 (query -> SELECT columns FROM IDENTIFIER where_clause group_clause having_clause join_clause order_clause limit_clause .)
+
+
+state 68
+
+    (27) order_clause -> ORDER BY IDENTIFIER direction .
+
+    LIMIT           reduce using rule 27 (order_clause -> ORDER BY IDENTIFIER direction .)
+    $end            reduce using rule 27 (order_clause -> ORDER BY IDENTIFIER direction .)
+
+
+state 69
+
+    (29) direction -> ASC .
+
+    LIMIT           reduce using rule 29 (direction -> ASC .)
+    $end            reduce using rule 29 (direction -> ASC .)
+
+
+state 70
+
+    (30) direction -> DESC .
+
+    LIMIT           reduce using rule 30 (direction -> DESC .)
+    $end            reduce using rule 30 (direction -> DESC .)
+
+
+state 71
+
+    (31) direction -> empty .
+
+    LIMIT           reduce using rule 31 (direction -> empty .)
+    $end            reduce using rule 31 (direction -> empty .)
+
+
+state 72
+
+    (25) join_clause -> JOIN IDENTIFIER ON IDENTIFIER OPERATOR . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 73
+
+
+state 73
+
+    (25) join_clause -> JOIN IDENTIFIER ON IDENTIFIER OPERATOR IDENTIFIER .
+
+    ORDER           reduce using rule 25 (join_clause -> JOIN IDENTIFIER ON IDENTIFIER OPERATOR IDENTIFIER .)
+    LIMIT           reduce using rule 25 (join_clause -> JOIN IDENTIFIER ON IDENTIFIER OPERATOR IDENTIFIER .)
+    $end            reduce using rule 25 (join_clause -> JOIN IDENTIFIER ON IDENTIFIER OPERATOR IDENTIFIER .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for COMMA in state 17 resolved as shift
