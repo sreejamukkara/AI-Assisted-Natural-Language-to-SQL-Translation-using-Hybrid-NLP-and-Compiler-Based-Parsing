@@ -16,22 +16,27 @@
 
 The **NL to SQL Compiler** is an AI-powered web application that converts **Natural Language queries** into executable **SQL statements**. It combines **Google Gemini AI** with **compiler design concepts** such as lexical analysis, parsing, semantic validation, and query optimization to generate accurate SQL queries.
 
-The generated SQL is executed on a **SQLite database**, and the results are displayed through an interactive web interface.
+The application supports both **text-based and voice-based query input**, allowing users to interact with the system naturally. The generated SQL is executed on a **SQLite database**, and the results are displayed through an interactive web interface. Users can also **export query results as a PDF** for documentation and reporting purposes.
 
 ---
 
 # ✨ Features
 
-- 🤖 Natural Language to SQL conversion using Google Gemini AI
-- ⚙️ Compiler-inspired architecture
-- 🔍 SQL syntax validation
-- 🧠 Semantic error detection
-- ⚡ Query optimization
+- 🤖 AI-powered Natural Language to SQL conversion using Google Gemini AI
+- 🎤 Voice-assisted query input for hands-free interaction
+- 📝 Text-based natural language query support
+- ⚙️ Compiler-inspired multi-phase query processing pipeline
+- 🔍 Lexical and syntax analysis
+- 🧠 Semantic validation and intelligent error detection
+- 🔧 Query optimization before execution
 - 🗄️ SQLite database execution
-- 🌐 Interactive web interface
-- 📊 Query result visualization
-- 📝 Clean and modular backend architecture
-
+- 📊 Interactive query result visualization
+- 📄 Export query results as PDF
+- 🌐 Modern and responsive web interface
+- 🧩 AST (Abstract Syntax Tree) visualization
+- 🧠 Intermediate Representation (IR) generation
+- 💻 SQL code generation with copy functionality
+- 📝 Clean, modular, and extensible backend architecture
 ---
 
 # 🏗️ System Architecture
@@ -39,7 +44,7 @@ The generated SQL is executed on a **SQLite database**, and the results are disp
 
 <p align="center">
 
-<img src="assets/architecture.png" width="850">
+<img src="assets/architectural_diagram.png" width="850">
 
 </p>
 
@@ -57,21 +62,11 @@ The generated SQL is executed on a **SQLite database**, and the results are disp
 
 ---
 
-## 💬 Natural Language Input
-
-<p align="center">
-
-<img src="assets/input.png" width="900">
-
-</p>
-
----
-
 ## 🧠 Generated SQL
 
 <p align="center">
 
-<img src="assets/sql_output.png" width="900">
+<img src="assets/ir_sql_generation.png" width="900">
 
 </p>
 
@@ -81,7 +76,7 @@ The generated SQL is executed on a **SQLite database**, and the results are disp
 
 <p align="center">
 
-<img src="assets/execution.png" width="900">
+<img src="assets/testing.png" width="900">
 
 </p>
 
@@ -91,17 +86,7 @@ The generated SQL is executed on a **SQLite database**, and the results are disp
 
 <p align="center">
 
-<img src="assets/error.png" width="900">
-
-</p>
-
----
-
-# 🎥 Demo
-
-<p align="center">
-
-<img src="assets/demo.gif">
+<img src="assets/syntax_error.png" width="900">
 
 </p>
 
@@ -167,12 +152,10 @@ AI-NL2SQL-Compiler/
 │
 ├── assets/
 │   ├── home.png
-│   ├── input.png
 │   ├── sql_output.png
-│   ├── execution.png
+│   ├── testing.png
 │   ├── error.png
-│   ├── architecture.png
-│   └── demo.gif
+│   ├── architectural_diagram.png
 │
 ├── requirements.txt
 ├── README.md
@@ -238,14 +221,9 @@ WHERE salary > 50000;
 
 # 🎯 Future Enhancements
 
-- Support for MySQL and PostgreSQL
 - User authentication
 - Query history
-- Export results to CSV/PDF
-- Voice-based SQL generation
-- Explain generated SQL
 - Dashboard with analytics
-- Dark mode
 - Multi-database support
 
 ---
