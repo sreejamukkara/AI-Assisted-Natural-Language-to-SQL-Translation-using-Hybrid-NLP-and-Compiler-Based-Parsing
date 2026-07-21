@@ -36,7 +36,6 @@ The generated SQL is executed on a **SQLite database**, and the results are disp
 
 # 🏗️ System Architecture
 
-> *(Replace this image after creating the architecture diagram.)*
 
 <p align="center">
 
