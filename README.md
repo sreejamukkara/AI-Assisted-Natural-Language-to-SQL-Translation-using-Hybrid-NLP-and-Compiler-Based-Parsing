@@ -44,7 +44,7 @@ The application supports both **text-based and voice-based query input**, allowi
 
 <p align="center">
 
-<img src="assets/architectural_diagram.png" width="850">
+<img src="assets/architectural_diagram.jpeg" width="850">
 
 </p>
 
